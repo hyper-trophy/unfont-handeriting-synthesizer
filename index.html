@@ -4,13 +4,14 @@
 
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <title>Calligrapher.ai: Realistic computer-generated handwriting</title>
+      <title>Unfont Handwriting Synthesizer</title>
       <meta name="Description"
             content="Realistic handwriting generator. Convert text to handwriting using an in-browser recurrent neural network. Choose from various print and cursive styles. Customize the outputs and download as SVG.">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <script type="text/javascript" async=""
-            src="./Public/analytics.js.download"></script>
-      <script async="" src="./Public/js"></script>
+      <script type="text/javascript" async="" src="./Public/analytics.js.download"></script>
+      <!-- <script async="" src="./Public/js"></script> -->
+      <script async=""
+            src="https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/js"></script>
       <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -21,7 +22,9 @@
 
             gtag('config', 'UA-157545049-3');
       </script>
-      <link href="./Public/css" rel="stylesheet">
+      <!-- <link href="./Public/css" rel="stylesheet"> -->
+      <link href="https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/css"
+            rel="stylesheet">
       <style>
             * {
                   margin: 0;
@@ -133,19 +136,19 @@
                   }
             }
       </style>
-      <meta property="og:title" content="Calligrapher.ai: Realistic computer-generated handwriting">
+      <!-- <meta property="og:title" content="Unfont: Realistic computer-generated handwriting">
       <meta property="og:description"
             content="Convert text to handwriting using an in-browser recurrent neural network. Choose from various print and cursive styles. Customize the outputs and download as SVG.">
-      <meta property="og:url" content="https://www.calligrapher.ai/">
+      <meta property="og:url" content="https://www.Unfont.ai/">
       <meta property="og:type" content="website">
-      <meta property="og:image" content="https://www.calligrapher.ai/og_image.png">
+      <meta property="og:image" content="https://www.Unfont.ai/og_image.png">
       <meta property="og:image:width" content="1200">
       <meta property="og:image:height" content="627">
       <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:title" content="Calligrapher.ai: Realistic computer-generated handwriting">
+      <meta name="twitter:title" content="Unfont.ai: Realistic computer-generated handwriting">
       <meta name="twitter:description"
             content="Convert text to handwriting using an in-browser recurrent neural network. Choose from various print and cursive styles. Customize the outputs and download as SVG.">
-      <meta name="twitter:image" content="https://www.calligrapher.ai/og_image.png">
+      <meta name="twitter:image" content="https://www.Unfont.ai/og_image.png"> -->
 </head>
 
 <body>
@@ -155,6 +158,7 @@
                         d="m409.8 278.5-153.8 153.8-153.8-153.8 28.3-28.3 105.5 105.5v-355.7h40v355.7l105.5-105.5zm102.2 193.5h-512v40h512zm0 0">
                   </path>
             </svg></div>
+      <div id="save-button"></div>
       <div id="control-panel">
             <div class="control-container">
                   <div class="label">Speed:</div>
@@ -756,7 +760,8 @@
             var ur, fr, sr = r => r.toFixed(2),
                   hr = r => r.toFixed(3);
             // ur = "https://d33au9p5d8tjhf.cloudfront.net/d.bin", fr = (() => {
-                  ur = "./Public/d.bin", fr = (() => { 
+            // ur = "./Public/d.bin", fr = (() => { 
+            ur = "https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/d.bin", fr = (() => {
                   var r = 0,
                         e = [" ", ".", "..", "..", "..."],
                         t = ar("loading-indicator");
