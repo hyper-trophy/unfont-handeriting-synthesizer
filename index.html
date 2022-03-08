@@ -7,7 +7,8 @@
       <title>Unfont Handwriting Synthesizer</title>
       <meta name="Description"
             content="Realistic handwriting generator. Convert text to handwriting using an in-browser recurrent neural network. Choose from various print and cursive styles. Customize the outputs and download as SVG.">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <!-- <meta name="viewport" content="width=device-width,initial-scale=2"> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <script type="text/javascript" async="" src="./Public/analytics.js.download"></script>
       <!-- <script async="" src="./Public/js"></script> -->
       <script async=""
@@ -22,10 +23,37 @@
 
             gtag('config', 'UA-157545049-3');
       </script>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!-- <link href="./Public/css" rel="stylesheet"> -->
       <link href="https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/css"
             rel="stylesheet">
       <style>
+            @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Dancing+Script&display=swap');
+
+            /* width */
+            ::-webkit-scrollbar {
+                  width: 15px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                  background: transparent;
+                  margin: 1rem;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                  background: #fff;
+                  border-radius: 20px;
+                  box-shadow: inset 0px 0px 10px 10px white;
+                  border: solid 5px #4d8684;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                  box-shadow: inset 0px 0px 10px 10px rgb(172, 172, 172);
+            }
+
             * {
                   margin: 0;
                   padding: 0;
@@ -35,6 +63,126 @@
                   font-weight: 400;
                   color: #50555a;
                   overscroll-behavior: none
+            }
+
+            body {
+                  overflow: hidden;
+            }
+
+            #root {
+                  height: 100%;
+                  width: 100%;
+                  position: fixed;
+                  z-index: 1;
+                  background-image: linear-gradient(to right top, #2a2929, #232323, #1d1c1d, #161616, #0f0f0f, #0f0f0f, #0f0f0f, #0f0f0f, #161616, #1d1c1d, #232323, #2a2929);
+            }
+
+            .header {
+                  position: fixed;
+                  top: 0;
+                  text-align: center;
+                  width: 100%;
+                  padding-bottom: 0.7rem;
+            }
+
+            .header h1 {
+                  margin: 0.7rem 0 0.5rem;
+                  color: #00C9C8;
+                  font-weight: 700;
+                  font-family: 'Comfortaa', cursive;
+            }
+
+            .header p {
+                  font-family: 'Dancing Script', cursive;
+                  color: #00C9C8;
+            }
+
+            .header hr {
+                  height: 1px;
+                  width: 100%;
+                  margin-top: 0.8rem;
+                  background: #47817F;
+            }
+
+            .centerdiv {
+                  height: calc(100vh - 14rem);
+                  width: min(90%, 50rem);
+                  background: #47817F;
+                  margin: auto;
+                  margin-top: 8rem;
+                  border-radius: 20px;
+                  box-shadow: inset 0px 0px 18px 1px #91c1bf6b;
+                  padding: 1rem;
+                  text-align: center;
+                  overflow-y: auto;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-around;
+                  flex-direction: column;
+            }
+
+
+
+            .centerdiv canvas {
+                  width: 100%;
+            }
+
+            .bottom {
+                  border-color: #00C9C8;
+                  position: fixed;
+                  bottom: 0;
+                  width: min(90%, 50rem);
+                  border-width: 1px;
+                  display: flex;
+                  height: 4rem;
+                  border-top-left-radius: 20px;
+                  border-top-right-radius: 20px;
+                  box-shadow: 0 0 20px 0px #3bba8b5e;
+                  border-style: solid;
+                  border-bottom: none;
+                  background: black;
+                  justify-content: center;
+                  margin-left: max(calc(50% - 25rem), 5%);
+                  transition: all 0.5s ease-in-out;
+            }
+
+            .bottom textarea {
+                  color: white;
+                  width: 100%;
+                  margin: 1rem;
+                  margin-right: 0;
+                  height: calc(100% - 2rem);
+                  resize: none;
+                  background: black;
+                  border: solid 1px #00C9C8;
+                  border-radius: 20px;
+                  padding: 0.45rem 1rem 0.45rem;
+                  transition: all 0.5s ease-in-out;
+            }
+
+            .submit {
+                  width: 10rem;
+                  height: 2rem;
+                  margin: 1rem;
+                  font-family: 'Comfortaa';
+                  background: #00C9C8;
+                  border-radius: 20px;
+                  color: white;
+                  font-size: 1rem;
+                  cursor: pointer;
+                  transition: all 0.5s ease-in-out;
+            }
+
+            .expand {
+                  position: absolute;
+                  left: calc(50% - 2.5rem);
+                  top: -2rem;
+                  width: 3rem;
+                  padding-top: 3px;
+            }
+
+            .submit:hover {
+                  opacity: 0.8;
             }
 
             #canvas {
@@ -77,13 +225,11 @@
             }
 
             #control-panel {
-                  position: absolute;
-                  top: 20px;
-                  right: 20px;
+                  position: relative;
                   display: flex;
-                  flex-wrap: wrap;
-                  align-items: right;
-                  justify-content: right
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center
             }
 
             #select-style {
@@ -93,7 +239,7 @@
             }
 
             .control-container {
-                  margin-left: auto;
+                  margin: auto;
                   padding-left: 30px;
                   display: flex
             }
@@ -103,11 +249,19 @@
             }
 
             .label {
-                  margin-right: 5px
+                  margin-right: 1rem;
+                  font-family: 'Comfortaa';
+                  color: white;
+                  margin-bottom: 1rem;
+                  margin-top: 0.4rem;
             }
 
             input[type=range] {
-                  width: 100px
+                  width: 100px;
+                  -webkit-appearance: none;
+                  appearance: none;
+                  height: 5px;
+                  outline: none;
             }
 
             #loading-indicator,
@@ -152,6 +306,73 @@
 </head>
 
 <body>
+      <div id="root">
+            <div class="header">
+                  <h1>Unfont</h1>
+                  <p>Handwriting Synthesizer</p>
+                  <hr>
+            </div>
+            <div class="centerdiv">
+                  <canvas id="mainCanvas" style="display: none"></canvas>
+                  <img src="./Public/ai.png" alt="" id="aiImg" srcset="" width="50%">
+
+                  <div id="control-panel">
+                        <div class="control-container">
+                              <div class="label">Speed </div>
+                              <div class="range-container"><input id="speed-slider" type="range" min="0.6" max="9.51"
+                                          value="8.49" step="0.1"></div>
+                        </div>
+                        <div class="control-container">
+                              <div class="label">Legibility </div>
+                              <div class="range-container"><input id="bias-slider" type="range" min="0.15" max="2.5"
+                                          value="1.33" step="0.02"></div>
+                        </div>
+                        <div class="control-container">
+                              <div class="label">Stroke Width </div>
+                              <div class="range-container"><input id="width-slider" type="range" min="0.1" max="1.5"
+                                          value="0.4" step="0.02"></div>
+                        </div>
+                        <div class="control-container">
+                              <div class="label">GPU Strength </div>
+                              <div class="range-container"><input id="GPU-slider" type="range" min="0" max="15"
+                                          value="11" step="0.2"></div>
+                        </div>
+                        <div class="control-container">
+                              <div class="label">Style </div>
+                              <select id="select-style">
+                                    <option value="-">–</option>
+                                    <option value="44">1</option>
+                                    <option value="54">2</option>
+                                    <option value="23">3</option>
+                                    <option value="1" selected="selected">4</option>
+                                    <option value="19">5</option>
+                                    <option value="6">6</option>
+                                    <option value="30">7</option>
+                                    <option value="11">8</option>
+                                    <option value="21">9</option>
+                              </select>
+                        </div>
+                  </div>
+
+            </div>
+            <div class="bottom">
+                  <div>
+                        <button class="expand submit" onmousedown="toogleTextArea()">
+                              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                                    fill="#FFFFFF">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M20 9H4v2h16V9zM4 15h16v-2H4v2z" />
+                              </svg>
+                        </button>
+                  </div>
+                  <textarea id="textInput" placeholder="Enter Your text Here"></textarea>
+                  <button class="submit" onclick="clickHandler()">Start</button>
+            </div>
+      </div>
+
+
+
+
       <div id="save-button"><svg height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg">
                   <title>Download</title>
                   <path
@@ -159,7 +380,7 @@
                   </path>
             </svg></div>
       <div id="save-button"></div>
-      <div id="control-panel">
+      <!-- <div id="control-panel">
             <div class="control-container">
                   <div class="label">Speed:</div>
                   <div class="range-container"><input id="speed-slider" type="range" min="0.6" max="9.51" value="2.49"
@@ -189,9 +410,12 @@
                         <option value="21">9</option>
                   </select>
             </div>
-      </div><svg id="canvas">
-            <path id="path" d=""></path>
-      </svg>
+      </div> -->
+      <div style="width: 100%; overflow: auto;">
+            <svg id="canvas">
+                  <path id="path" d=""></path>
+            </svg>
+      </div>
       <div id="bottom-bar"><input id="text-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
                   spellcheck="false" placeholder="Enter text here" maxlength="50" autofocus=""> <button
                   id="draw-button">Write!</button></div>
@@ -761,68 +985,70 @@
                   hr = r => r.toFixed(3);
             // ur = "https://d33au9p5d8tjhf.cloudfront.net/d.bin", fr = (() => {
             // ur = "./Public/d.bin", fr = (() => { 
-            ur = "https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/d.bin", fr = (() => {
-                  var r = 0,
-                        e = [" ", ".", "..", "..", "..."],
-                        t = ar("loading-indicator");
-                  return setInterval(() => {
-                        t.innerHTML = "Loading " + e[r % K(e)], r += 1
-                  }, 200)
-            })(), fetch(ur).then(r => r.arrayBuffer()).then(r => {
-                  $ = (r => {
-                        var e = 0,
-                              t = {},
-                              a = new DataView(r),
-                              l = r => {
-                                    do {
-                                          var o = a.getUint8(e);
-                                          e += 1;
-                                          var n = new Uint8Array(o);
-                                          for (let r = 0; r < o; r++) n[r] = a.getUint8(e), e +=
-                                                1;
-                                          n = D(n);
-                                          var v = a.getUint8(e);
-                                          e += 1;
-                                          var i = a.getUint32(e, !0);
-                                          e += 4;
-                                          var u = new Float32Array(i);
-                                          for (let r = 0; r < i; r++) u[r] = a.getFloat32(e, !
-                                                0), e += 4;
-                                          if (v) {
-                                                var f = new Uint8Array(i);
-                                                for (let r = 0; r < i; r++) f[r] = a.getUint16(
-                                                      e, !0), e += 1
-                                          }
-                                          var s = a.getUint8(e);
-                                          e += 1;
-                                          var h = new Uint16Array(s);
-                                          for (let r = 0; r < s; r++) h[r] = a.getUint16(e, !0),
-                                                e += 2;
-                                          ["y", "w", "r", "l"].includes(n) ? u = V(u, f, h) :
-                                                v && (u = _(u, f, h)), t[n] = u
-                                    } while (performance.now() - r < 16 && e < a.byteLength);
-                                    e < a.byteLength ? window.requestAnimationFrame(l) : (ar(
-                                          "draw-button").addEventListener(
-                                                "mousedown", E), ar("text-input")
-                                                      .addEventListener("keydown", r => 13 === r
-                                                            .keyCode ? E() : 1), ar(
-                                                                  "loading-indicator").remove())
-                              };
-                        return l(), t
-                  })(r), clearTimeout(fr)
-            }), ar("save-button").addEventListener("click", () => {
-                  var r = ar("canvas").getBBox(),
-                        e = [hr(r.x - 3), hr(r.y - 3), hr(r.width + 6), hr(r.height + 6)].join(" "),
-                        t = ar("canvas");
-                  t.setAttribute("viewBox", e);
-                  var a = (new XMLSerializer).serializeToString(t);
-                  t.removeAttribute("viewBox");
-                  var l = document.createElement("a");
-                  l.setAttribute("href", "data:image/svg+xml;base64," + window.btoa(a)), l.setAttribute(
-                        "download", Z.toString().toLowerCase().replace(/\s+/g, "-").replace(
-                              /[^\w\-]+/g, "").replace(/\-\-+/g, "-").trim() + ".svg"), l.click()
-            });
+            ur = "https://raw.githubusercontent.com/hyper-trophy/unfont-handeriting-synthesizer/main/Public/d.bin", fr =
+                  (() => {
+                        var r = 0,
+                              e = [" ", ".", "..", "..", "..."],
+                              t = ar("loading-indicator");
+                        return setInterval(() => {
+                              t.innerHTML = "Loading " + e[r % K(e)], r += 1
+                        }, 200)
+                  })(), fetch(ur).then(r => r.arrayBuffer()).then(r => {
+                        $ = (r => {
+                              var e = 0,
+                                    t = {},
+                                    a = new DataView(r),
+                                    l = r => {
+                                          do {
+                                                var o = a.getUint8(e);
+                                                e += 1;
+                                                var n = new Uint8Array(o);
+                                                for (let r = 0; r < o; r++) n[r] = a.getUint8(e), e +=
+                                                      1;
+                                                n = D(n);
+                                                var v = a.getUint8(e);
+                                                e += 1;
+                                                var i = a.getUint32(e, !0);
+                                                e += 4;
+                                                var u = new Float32Array(i);
+                                                for (let r = 0; r < i; r++) u[r] = a.getFloat32(e, !
+                                                      0), e += 4;
+                                                if (v) {
+                                                      var f = new Uint8Array(i);
+                                                      for (let r = 0; r < i; r++) f[r] = a.getUint16(
+                                                            e, !0), e += 1
+                                                }
+                                                var s = a.getUint8(e);
+                                                e += 1;
+                                                var h = new Uint16Array(s);
+                                                for (let r = 0; r < s; r++) h[r] = a.getUint16(e, !0),
+                                                      e += 2;
+                                                ["y", "w", "r", "l"].includes(n) ? u = V(u, f, h) :
+                                                      v && (u = _(u, f, h)), t[n] = u
+                                          } while (performance.now() - r < 16 && e < a.byteLength);
+                                          e < a.byteLength ? window.requestAnimationFrame(l) : (ar(
+                                                "draw-button").addEventListener(
+                                                      "mousedown", E), ar("text-input")
+                                                            .addEventListener("keydown", r => 13 === r
+                                                                  .keyCode ? E() : 1), ar(
+                                                                        "loading-indicator").remove())
+                                    };
+                              return l(), t
+                        })(r), clearTimeout(fr)
+                  }), ar("save-button").addEventListener("click", () => {
+                        var r = ar("canvas").getBBox(),
+                              e = [hr(r.x - 3), hr(r.y - 3), hr(r.width + 6), hr(r.height + 6)].join(" "),
+                              t = ar("canvas");
+                        t.setAttribute("viewBox", e);
+                        var a = (new XMLSerializer).serializeToString(t);
+                        t.removeAttribute("viewBox");
+                        var l = document.createElement("a");
+                        l.setAttribute("href", "data:image/svg+xml;base64," + window.btoa(a)), l.setAttribute(
+                              "download", Z.toString().toLowerCase().replace(/\s+/g, "-").replace(
+                                    /[^\w\-]+/g, "").replace(/\-\-+/g, "-").trim() + ".svg"), l.click()
+                  });
       </script>
+      <script src="./Public/script.js"></script>
 </body>
 
 </html>
