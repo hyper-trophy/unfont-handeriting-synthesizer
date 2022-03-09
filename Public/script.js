@@ -6,7 +6,7 @@ let backgroundImageDataUri
 let delta = 4
 let svg = document.querySelector('#canvas')
 svg.style.height = '110px'
-svg.style.width = '1100px'
+svg.style.width = '950px'
 let inputBox = document.querySelector('#text-input')
 let submitBtn = document.querySelector('#draw-button')
 let img = document.createElement('img');
@@ -73,7 +73,8 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 const drawLineOnCanvas = (src, i) => {
     return new Promise((resolve, reject) => {
         img.onload = () => {
-            ctx.drawImage(img, 120, 50, 1400, 110, 0, 100 + 40 * i, 1080, 110);
+            // ctx.drawImage(img, 120, 50, 1600, 110, 0, 100 + 40 * i, 1080, 110);
+            ctx.drawImage(img, -70, 40 * i);
             resolve()
         }
         img.onerror = reject
