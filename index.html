@@ -104,6 +104,12 @@
                   background: #47817F;
             }
 
+            .header a {
+                  position: fixed;
+                  top: 1.5rem;
+                  right: 1.5rem;
+            }
+
             .centerdiv {
                   height: calc(100vh - 15rem);
                   width: min(90%, 50rem);
@@ -125,6 +131,7 @@
 
             .centerdiv canvas {
                   width: 100%;
+                  margin-bottom: 1rem;
             }
 
             .bottom {
@@ -144,6 +151,7 @@
                   justify-content: center;
                   margin-left: max(calc(50% - 25rem), 5%);
                   transition: all 0.5s ease-in-out;
+                  z-index: 1;
             }
 
             .bottom textarea {
@@ -233,9 +241,13 @@
             }
 
             #select-style {
-                  font-size: 16px;
+                  font-size: 0.9rem;
                   height: 25px;
-                  border: 1px solid #969ba0
+                  border: navajowhite;
+                  background: #00c9c8;
+                  border-radius: 20px;
+                  padding: 0 0.5rem;
+                  color: white;
             }
 
             .control-container {
@@ -245,15 +257,24 @@
             }
 
             .range-container {
-                  padding-top: 3px
+                  padding-bottom: 5px;
+            }
+
+            .right {
+                  text-align: right;
+            }
+
+            .left {
+                  text-align: left;
             }
 
             .label {
                   margin-right: 1rem;
                   font-family: 'Comfortaa';
                   color: white;
-                  margin-bottom: 1rem;
+                  margin-bottom: 0.5rem;
                   margin-top: 0.4rem;
+                  font-size: 0.9rem;
             }
 
             input[type=range] {
@@ -262,6 +283,15 @@
                   appearance: none;
                   height: 5px;
                   outline: none;
+            }
+
+            input[type=range]::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  appearance: none;
+                  width: 15px;
+                  height: 15px;
+                  background: #00C9C8;
+                  cursor: pointer;
             }
 
             #loading-indicator,
@@ -311,63 +341,94 @@
                   <h1>Unfont</h1>
                   <p>Handwriting Synthesizer</p>
                   <hr>
+                  <a target="_blank" href="https://www.instagram.com/notreallyhaarsh/">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#00C9C8" viewBox="0 0 50 50" width="40px"
+                              height="40px">
+                              <path
+                                    d="M 16 3 C 8.83 3 3 8.83 3 16 L 3 34 C 3 41.17 8.83 47 16 47 L 34 47 C 41.17 47 47 41.17 47 34 L 47 16 C 47 8.83 41.17 3 34 3 L 16 3 z M 37 11 C 38.1 11 39 11.9 39 13 C 39 14.1 38.1 15 37 15 C 35.9 15 35 14.1 35 13 C 35 11.9 35.9 11 37 11 z M 25 14 C 31.07 14 36 18.93 36 25 C 36 31.07 31.07 36 25 36 C 18.93 36 14 31.07 14 25 C 14 18.93 18.93 14 25 14 z M 25 16 C 20.04 16 16 20.04 16 25 C 16 29.96 20.04 34 25 34 C 29.96 34 34 29.96 34 25 C 34 20.04 29.96 16 25 16 z">
+                              </path>
+                        </svg>
+                  </a>
             </div>
             <div class="centerdiv">
                   <canvas id="mainCanvas" style="display: none"></canvas>
-                  <img src="./Public/ai.png" alt="" id="aiImg" srcset="" width="50%">
+                  <img src="./Public/ai.png" alt="" id="aiImg" srcset="" width="60%">
 
-                  <div id="control-panel">
-                        <div class="control-container">
-                              <div class="label">Speed </div>
-                              <div class="range-container"><input id="speed-slider" type="range" min="0.6" max="9.51"
-                                          value="8.49" step="0.1"></div>
-                        </div>
-                        <div class="control-container">
-                              <div class="label">Legibility </div>
-                              <div class="range-container"><input id="bias-slider" type="range" min="0.15" max="2.5"
-                                          value="1.33" step="0.02"></div>
-                        </div>
-                        <div class="control-container">
-                              <div class="label">Stroke Width </div>
-                              <div class="range-container"><input id="width-slider" type="range" min="0.1" max="1.5"
-                                          value="0.4" step="0.02"></div>
-                        </div>
-                        <div class="control-container">
-                              <div class="label">GPU Strength </div>
-                              <div class="range-container"><input id="GPU-slider" type="range" min="0" max="15"
-                                          value="11" step="0.2"></div>
-                        </div>
-                        <div class="control-container">
-                              <div class="label">Style </div>
-                              <select id="select-style">
-                                    <option value="-">–</option>
-                                    <option value="44">1</option>
-                                    <option value="54">2</option>
-                                    <option value="23">3</option>
-                                    <option value="1" selected="selected">4</option>
-                                    <option value="19">5</option>
-                                    <option value="6">6</option>
-                                    <option value="30">7</option>
-                                    <option value="11">8</option>
-                                    <option value="21">9</option>
-                              </select>
-                        </div>
-                  </div>
+                  <!-- <div id="control-panel"> -->
+                  <table style="margin: 0 auto;">
+                        <tr>
+                              <td class="right">
+                                    <div class="label">Speed </div>
+                              </td>
+                              <td class="left">
+                                    <div class="range-container"><input id="speed-slider" type="range" min="0.6"
+                                                max="9.51" value="8.49" step="0.1"></div>
+                              </td>
+                        </tr>
+                        <!-- </div> -->
+                        <tr>
+                              <td class="right">
+                                    <div class="label">Legibility </div>
+                              </td>
+                              <td class="left">
+                                    <div class="range-container"><input id="bias-slider" type="range" min="0.15"
+                                                max="2.5" value="1.33" step="0.02"></div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td class="right">
+                                    <div class="label">Stroke Width </div>
+                              </td>
+                              <td class="left">
+                                    <div class="range-container"><input id="width-slider" type="range" min="0.1"
+                                                max="1.5" value="0.4" step="0.02"></div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td class="right">
+                                    <div class="label">GPU Strength </div>
+                              </td>
+                              <td class="left">
+                                    <div class="range-container"><input id="GPU-slider" type="range" min="0" max="15"
+                                                value="11" step="0.2"></div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td class="right">
+                                    <div class="label">Style </div>
+                              </td>
+                              <td class="left">
+                                    <select id="select-style">
+                                          <option value="-">–</option>
+                                          <option value="44">1</option>
+                                          <option value="54">2</option>
+                                          <option value="23">3</option>
+                                          <option value="1" selected="selected">4</option>
+                                          <option value="19">5</option>
+                                          <option value="6">6</option>
+                                          <option value="30">7</option>
+                                          <option value="11">8</option>
+                                          <option value="21">9</option>
+                                    </select>
+                              </td>
+                        </tr>
+                  </table>
+            </div>
 
+      </div>
+      <div class="bottom">
+            <div>
+                  <button class="expand submit" onmousedown="toogleTextArea()">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                              fill="#FFFFFF">
+                              <path d="M0 0h24v24H0z" fill="none" />
+                              <path d="M20 9H4v2h16V9zM4 15h16v-2H4v2z" />
+                        </svg>
+                  </button>
             </div>
-            <div class="bottom">
-                  <div>
-                        <button class="expand submit" onmousedown="toogleTextArea()">
-                              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
-                                    fill="#FFFFFF">
-                                    <path d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M20 9H4v2h16V9zM4 15h16v-2H4v2z" />
-                              </svg>
-                        </button>
-                  </div>
-                  <textarea id="textInput" placeholder="Enter Your text Here"></textarea>
-                  <button class="submit" onclick="clickHandler()">Start</button>
-            </div>
+            <textarea id="textInput" placeholder="Enter Your text Here"></textarea>
+            <button class="submit" onclick="clickHandler()">Start</button>
+      </div>
       </div>
 
 
