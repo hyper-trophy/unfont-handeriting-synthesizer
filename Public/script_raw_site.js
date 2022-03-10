@@ -1,8 +1,15 @@
 let canvas = document.createElement('canvas')
 let ctx = canvas.getContext('2d')
 
-let backgroundImageUrl =  'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGFwZXIlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80'
+// let backgroundImageUrl =  'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGFwZXIlMjBiYWNrZ3JvdW5kfGVufDB8fDB8fA%3D%3D&w=1000&q=80'
+let backgroundImageUrl =  'https://drive.google.com/uc?export=view&id=14esMK8gGuhz4JUFQfjpyEYRgMXeXhRJr'
 let backgroundImageDataUri
+
+let images = [
+    ["https://drive.google.com/uc?export=view&id=1nEye5N0b3SUyYpOHF7gXT3TMHYvANpHR", new Image()],
+    ["https://drive.google.com/uc?export=view&id=1hUosOTOZL39YUhU0bYoKsOes2H1lUnJ4", new Image()],
+    ["https://drive.google.com/uc?export=view&id=14esMK8gGuhz4JUFQfjpyEYRgMXeXhRJr", new Image()],
+]
 
 let svg = document.querySelector('#canvas')
 svg.style.height = '110px'
@@ -10,7 +17,19 @@ svg.style.width = '1100px'
 let inputBox = document.querySelector('#text-input')
 let submitBtn = document.querySelector('#draw-button')
 let img = document.createElement('img');
-// document.querySelector('body').append(canvas)
+document.querySelector('body').append(canvas)
+
+let initImages = async ()=>{
+    await Promise.all(images.map(([url, img])=>
+        new Promise(r=>{
+            img.crossOrigin="anonymous"
+            img.onload = _=>r()
+            img.src = url
+        })
+    ))
+    console.log('images loaded')
+    return
+}
 
 function urlContentToDataUri(url) {
     return fetch(url)
@@ -38,12 +57,18 @@ const setCanvasBackground = (src, i) => {
     })
 }
 
+let setCanvasBackgroundNew = () =>{
+    let imgToDraw = images[Math.floor(Math.random() * images.length)][1]
+    ctx.drawImage(imgToDraw, 0, 0, imgToDraw.width, imgToDraw.height, 0, 0, canvas.width, canvas.height);
+}
+
 const initCanvas = async () => {
     canvas.height = 1200
     canvas.width = 880
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    await setCanvasBackground(backgroundImageDataUri)
+    // await setCanvasBackground(backgroundImageDataUri)
+    setCanvasBackgroundNew()
     return;
 }
 
@@ -64,7 +89,8 @@ let downloadPageAndClearCanvas = async () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    await setCanvasBackground(backgroundImageDataUri)
+    // await setCanvasBackground(backgroundImageDataUri)
+    setCanvasBackgroundNew()
     return;
 }
 
@@ -82,7 +108,8 @@ const drawLineOnCanvas = (src, i) => {
 }
 
 let writeLines = async (text) => {
-    await initBackgroundImageDataUri()
+    // await initBackgroundImageDataUri()
+    await initImages()
     await initCanvas()
     const lines = getLines(text)
     i = 0
@@ -107,6 +134,6 @@ let writeLines = async (text) => {
     downloadPageAndClearCanvas()
 }
 
-// text = ``
+text = ``
 
-// writeLines(text)
+writeLines(text)
