@@ -39,8 +39,8 @@ const setCanvasBackground = (src, i) => {
 }
 
 const initCanvas = async () => {
-    canvas.height = 1200
-    canvas.width = 880
+    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     await setCanvasBackground(backgroundImageDataUri)
